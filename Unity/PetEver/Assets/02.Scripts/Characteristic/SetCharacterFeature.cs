@@ -8,13 +8,7 @@ public class SetCharacterFeature : MonoBehaviour
 
     public GameObject dogPrefab;
     public GameObject dog;
-    public GameObject maltesePrefab;
     public GameObject pomeLongPrefab;
-    public GameObject pomeShortPrefab;
-    public GameObject pugPrefab;
-    public GameObject shihtzuPrefab;
-    public GameObject retrieverPrefab;
-    public GameObject poodlePrefab;
 
     //declare variables for control fur length 
     public GameObject bodyfur_back, bodyfur_middle, bodyfur_front;
@@ -29,43 +23,8 @@ public class SetCharacterFeature : MonoBehaviour
     public Material pomeLong_black;
     public Material pomeLong_black_deep;
     public Material pomeLong_black_light;
-    public Material pomeLong_brown;
-    public Material pomeLong_brown_deep;
-    public Material pomeLong_brown_light;
-    public Material pomeLong_white;
-    public Material pomeLong_white_light;
-    public Material pomeLong_white_deep;
-
-    public Material pomeShort_black;
-    public Material pomeShort_black_deep;
-    public Material pomeShort_black_light;
-    public Material pomeShort_brown;
-    public Material pomeShort_brown_deep;
-    public Material pomeShort_brown_light;
-    public Material pomeShort_white;
-    public Material pomeShort_white_deep;
-    public Material pomeShort_white_light;
 
 
-    public Material pug_black;
-    public Material pug_black_deep;
-    public Material pug_black_light;
-    public Material pug_brown;
-    public Material pug_brown_deep;
-    public Material pug_brown_light;
-
-
-    public Material maltese_white;
-    public Material maltese_white_deep;
-    public Material maltese_white_light;
-
-    public Material shihtzu_whitebrown;
-    public Material shihtzu_whitebrown_deep;
-    public Material shihtzu_whitebrown_light;
-
-    public Material retriever_brown;
-    public Material retriever_brown_deep;
-    public Material retriever_brown_light;
 
 
     private SkinnedMeshRenderer meshRenderer; 
@@ -75,106 +34,22 @@ public class SetCharacterFeature : MonoBehaviour
     private String section1Color = "";
     private String section2Color = "";
     private AndroidJavaObject activityContext = null;
-    [SerializeField] private GameObject CharacterParent;
 
     void Awake()
     {
-        //Vector3 dogScale = new Vector3(2f, 2f, 2f);
+        Vector3 dogScale = new Vector3(2f, 2f, 2f);
 
-        using (AndroidJavaClass activityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-        {
+
             breed = "";
             petName = "";
-           // GameObject dogPrefab;
-            try
-            {
-                activityContext = activityClass.GetStatic<AndroidJavaObject>("currentActivity");
 
-                AndroidJavaObject intent = activityContext.Call<AndroidJavaObject>("getIntent");
-                breed = intent.Call<String>("getStringExtra", "breed");
-                petName = intent.Call<String>("getStringExtra", "petname");
-                section1Color = intent.Call<String>("getStringExtra", "section1Color");
-                section2Color = intent.Call<String>("getStringExtra", "section2Color");
+            
+            breed = "POME_LONG";
+            section1Color = "000000";
+            dogPrefab = pomeLongPrefab;
 
-                Debug.Log("[intent data] arguments : " + breed);
-                Debug.Log("[intent data] arguments : " + petName);
-                Debug.Log("[intent data] arguments : " + section1Color);
-                Debug.Log("[intent data] arguments : " + section2Color);
-            }
-            catch (Exception e)
-            {
-                Debug.Log("GameManager Exception : " + e.ToString());
-            }
-
-             //breed = "POME_LONG";
-             //section1Color = "000000";
-
-            switch (breed)
-            {
-                case "POME_LONG":
-                    dogPrefab = pomeLongPrefab;
-                    meshRenderer = dogPrefab.transform.Find("body").GetComponent<SkinnedMeshRenderer>();
-                    if ((section1Color.CompareTo("ffffff") == 0) || (section1Color.CompareTo("f0ddcf") == 0)){
-                        meshRenderer.material = pomeLong_white;
-                    }
-                    else if((section1Color.CompareTo("c68642") == 0) || (section1Color.CompareTo("945826") == 0)){
-                        meshRenderer.material = pomeLong_brown;
-                    }
-                    else if(section1Color.CompareTo("000000") == 0){
-                        meshRenderer.material = pomeLong_black;
-                    }
-                    else
-                    {
-                        Debug.Log("No Color is matched with colorcode : "+ section1Color);
-                    }
-                    break;
-                case "POME_SHORT":
-                    dogPrefab = pomeShortPrefab;
-                    meshRenderer = dogPrefab.transform.Find("body").GetComponent<SkinnedMeshRenderer>();
-                    if ((section1Color.CompareTo("ffffff") == 0) || (section1Color.CompareTo("f0ddcf") == 0)){
-                        meshRenderer.material = pomeShort_white;
-                    }
-                    else if((section1Color.CompareTo("c68642") == 0) || (section1Color.CompareTo("945826" )==0)){
-                        meshRenderer.material = pomeShort_brown;
-                    }
-                    else if(section1Color.CompareTo("000000") == 0){
-                        meshRenderer.material = pomeShort_black;
-                    }
-                    else
-                    {
-                        Debug.Log("No Color is matched with colorcode : "+ section1Color);
-                    }                    
-                    break;
-                case "MALTESE":
-                    dogPrefab = maltesePrefab;
-                    break;
-                case "PUG":
-                    dogPrefab = pugPrefab;
-                    meshRenderer = dogPrefab.transform.Find("body").GetComponent<SkinnedMeshRenderer>();
-                    if (section1Color.CompareTo("000000") == 0){
-                        meshRenderer.material = pug_black;
-                    }
-                    else if((section1Color.CompareTo("f4edde") == 0) || (section1Color.CompareTo("c69e7d" )==0)){
-                        meshRenderer.material = pug_brown;    
-                    }
-                    else
-                    {
-                        Debug.Log("No Color is matched with colorcode : "+ section1Color);
-                    }                                    
-                    break;
-                case "SHIHTZU":
-                    dogPrefab = shihtzuPrefab;
-                    break;
-                case "GOLDEN":
-                    dogPrefab = retrieverPrefab;
-                    break;      
-                 case "POODLE":
-                    dogPrefab = poodlePrefab;
-                    break;                                                        
-                default:
-                    dogPrefab = pomeShortPrefab;
-                    break;
-            }
+            meshRenderer = dogPrefab.transform.Find("body").GetComponent<SkinnedMeshRenderer>();
+            meshRenderer.material = pomeLong_black;
 
 
             dog = Instantiate(dogPrefab, GameObject.Find("Character").transform) as GameObject;
@@ -199,9 +74,7 @@ public class SetCharacterFeature : MonoBehaviour
             middleFurValue_chin = new Vector3(1.0f, 1.0f, 1.0f );
             shortFurValue_chin = new Vector3(0.4f, 0.4f, 0.4f );   
 
-            DontDestroyOnLoad(CharacterParent);
-
-        }
+            DontDestroyOnLoad(dog.transform.parent);
     }
 
     public void FurColorLight(bool isOn)
@@ -212,61 +85,11 @@ public class SetCharacterFeature : MonoBehaviour
             switch (breed)
             {
                 case "POME_LONG":
-                    if ((section1Color.CompareTo("ffffff") == 0) || (section1Color.CompareTo("f0ddcf") == 0)){
-                        meshRenderer.material = pomeLong_white_light;
-                    }
-                    else if((section1Color.CompareTo("c68642") == 0) || (section1Color.CompareTo("945826") == 0)){
-                        meshRenderer.material = pomeLong_brown_light;
-                    }
-                    else if(section1Color.CompareTo("000000") == 0){
-                        meshRenderer.material = pomeLong_black_light;
-                    }
-                    else
-                    {
-                        Debug.Log("No Color is matched with colorcode : "+ section1Color);
-                    }                    
+                    meshRenderer.material = pomeLong_black_light;                 
                     break;
-                case "POME_SHORT":
-                    if ((section1Color.CompareTo("ffffff") == 0) || (section1Color.CompareTo("f0ddcf") == 0)){
-                        meshRenderer.material = pomeShort_white_light;
-                    }
-                    else if((section1Color.CompareTo("c68642") == 0) || (section1Color.CompareTo("945826" )==0)){
-                        meshRenderer.material = pomeShort_brown_light;
-                    }
-                    else if(section1Color.CompareTo("000000") == 0){
-                        meshRenderer.material = pomeShort_black_light;
-                    }
-                    else
-                    {
-                        Debug.Log("No Color is matched with colorcode : "+ section1Color);
-                    }                    
-                    break;
-                case "MALTESE":
-                    meshRenderer.material = maltese_white_light;                    
-                    break;
-                case "PUG":
-                    if (section1Color.CompareTo("000000") == 0){
-                        meshRenderer.material = pug_black_light;
-                    }
-                    else if((section1Color.CompareTo("f4edde") == 0) || (section1Color.CompareTo("c69e7d" )==0)){
-                        meshRenderer.material = pug_brown_light;       
-                    }
-                    else
-                    {
-                        Debug.Log("No Color is matched with colorcode : "+ section1Color);
-                    }                                 
-                    break;                   
-                case "SHIHTZU":
-                    meshRenderer.material = shihtzu_whitebrown_light;
-                    break;
-                case "GOLDEN":
-                    meshRenderer.material = retriever_brown_light;
-                    break;      
-                 case "POODLE":
-                    dogPrefab = poodlePrefab;
-                    break;                                                        
+                                                    
                 default:
-                    dogPrefab = pomeShortPrefab;
+                    dogPrefab = pomeLongPrefab;
                     break;
             }
         }
@@ -280,61 +103,11 @@ public class SetCharacterFeature : MonoBehaviour
             switch (breed)
             {
                 case "POME_LONG":
-                    if ((section1Color.CompareTo("ffffff") == 0) || (section1Color.CompareTo("f0ddcf") == 0)){
-                        meshRenderer.material = pomeLong_white;
-                    }
-                    else if((section1Color.CompareTo("c68642") == 0) || (section1Color.CompareTo("945826") == 0)){
-                        meshRenderer.material = pomeLong_brown;
-                    }
-                    else if(section1Color.CompareTo("000000") == 0){
-                        meshRenderer.material = pomeLong_black;
-                    }
-                    else
-                    {
-                        Debug.Log("No Color is matched with colorcode : "+ section1Color);
-                    }                    
+                    meshRenderer.material = pomeLong_black;                 
                     break;
-                case "POME_SHORT":
-                    if ((section1Color.CompareTo("ffffff") == 0) || (section1Color.CompareTo("f0ddcf") == 0)){
-                        meshRenderer.material = pomeShort_white;
-                    }
-                    else if((section1Color.CompareTo("c68642") == 0) || (section1Color.CompareTo("945826" )==0)){
-                        meshRenderer.material = pomeShort_brown;
-                    }
-                    else if(section1Color.CompareTo("000000") == 0){
-                        meshRenderer.material = pomeShort_black;
-                    }
-                    else
-                    {
-                        Debug.Log("No Color is matched with colorcode : "+ section1Color);
-                    }                    
-                    break;
-                case "MALTESE":
-                    meshRenderer.material = maltese_white;                    
-                    break;
-                case "PUG":
-                    if (section1Color.CompareTo("000000") == 0){
-                        meshRenderer.material = pug_black;
-                    }
-                    else if((section1Color.CompareTo("f4edde") == 0) || (section1Color.CompareTo("c69e7d" )==0)){
-                        meshRenderer.material = pug_brown;  
-                    }
-                    else
-                    {
-                        Debug.Log("No Color is matched with colorcode : "+ section1Color);
-                    }                    
-                    break;
-                case "SHIHTZU":
-                    meshRenderer.material = shihtzu_whitebrown;
-                    break;
-                case "GOLDEN":
-                    meshRenderer.material = retriever_brown;
-                    break;      
-                 case "POODLE":
-                    dogPrefab = poodlePrefab;
-                    break;                                                        
+                                                    
                 default:
-                    dogPrefab = pomeShortPrefab;
+                    dogPrefab = pomeLongPrefab;
                     break;
             }
         }
@@ -349,61 +122,11 @@ public class SetCharacterFeature : MonoBehaviour
             switch (breed)
             {
                 case "POME_LONG":
-                    if ((section1Color.CompareTo("ffffff") == 0) || (section1Color.CompareTo("f0ddcf") == 0)){
-                        meshRenderer.material = pomeLong_white_deep;
-                    }
-                    else if((section1Color.CompareTo("c68642") == 0) || (section1Color.CompareTo("945826") == 0)){
-                        meshRenderer.material = pomeLong_brown_deep;
-                    }
-                    else if(section1Color.CompareTo("000000") == 0){
-                        meshRenderer.material = pomeLong_black_deep;
-                    }
-                    else
-                    {
-                        Debug.Log("No Color is matched with colorcode : "+ section1Color);
-                    }                    
+                    meshRenderer.material = pomeLong_black_deep;                    
                     break;
-                case "POME_SHORT":
-                    if ((section1Color.CompareTo("ffffff") == 0) || (section1Color.CompareTo("f0ddcf") == 0)){
-                        meshRenderer.material = pomeShort_white_deep;
-                    }
-                    else if((section1Color.CompareTo("c68642") == 0) || (section1Color.CompareTo("945826" )==0)){
-                        meshRenderer.material = pomeShort_brown_deep;
-                    }
-                    else if(section1Color.CompareTo("000000") == 0){
-                        meshRenderer.material = pomeShort_black_deep;
-                    }
-                    else
-                    {
-                        Debug.Log("No Color is matched with colorcode : "+ section1Color);
-                    }                    
-                    break;
-                case "MALTESE":
-                    meshRenderer.material = maltese_white_deep;                    
-                    break;
-                case "PUG":
-                    if (section1Color.CompareTo("000000") == 0){
-                        meshRenderer.material = pug_black_deep;
-                    }
-                    else if((section1Color.CompareTo("f4edde") == 0) || (section1Color.CompareTo("c69e7d" )==0)){
-                        meshRenderer.material = pug_brown_deep;  
-                    }
-                    else
-                    {
-                        Debug.Log("No Color is matched with colorcode : "+ section1Color);
-                    }                    
-                    break;
-                case "SHIHTZU":
-                    meshRenderer.material = shihtzu_whitebrown_deep;
-                    break;
-                case "GOLDEN":
-                    meshRenderer.material = retriever_brown_deep;
-                    break;      
-                 case "POODLE":
-                    dogPrefab = poodlePrefab;
-                    break;                                                        
+                                                  
                 default:
-                    dogPrefab = pomeShortPrefab;
+                    dogPrefab = pomeLongPrefab;
                     break;
             }
         }

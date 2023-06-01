@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/01.Scenes/CreationScene.unity
     guid: 21159bfdaf3cbce478a9b62e865a4a68
+  - enabled: 1
+    path: Assets/01.Scenes/MySpaceScene.unity
+    guid: 741453f2b4a25ca4c996dab89e46dbb5
   - enabled: 1
     path: Assets/01.Scenes/WorldScene.unity
     guid: 7cab59411e004f04482d5629f65cc139
@@ -20,7 +23,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.Scenes/MemorialSpace.unity
     guid: 695652970dda3874a8f4c588efd52b19
-  - enabled: 1
-    path: Assets/01.Scenes/MySpaceScene.unity
-    guid: 741453f2b4a25ca4c996dab89e46dbb5
   m_configObjects: {}

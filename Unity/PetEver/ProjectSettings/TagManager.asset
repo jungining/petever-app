@@ -23,6 +23,9 @@ TagManager:
   - DogView
   - NoticeText
   - DogNPC
+  - MySpaceCanvas
+  - DemoPicCanvas
+  - DemoCreationCavnas
   layers:
   - Default
   - TransparentFX

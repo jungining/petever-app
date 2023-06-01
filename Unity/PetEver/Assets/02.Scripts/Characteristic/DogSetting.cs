@@ -35,7 +35,7 @@ public class DogSetting : MonoBehaviour
         OwnerDog = GameObject.FindGameObjectWithTag("OwnerDog");
         nav = OwnerDog.GetComponent<NavMeshAgent>();
 
-        if ("CreationScene".Equals(scene.name))
+        if ("MySpaceScene".Equals(scene.name))
         {
             nav.enabled = false;
             OwnerDog.GetComponent<Animator>().runtimeAnimatorController = OwnerDog.GetComponent<AnimatorSetup>().animatorController_creationScene;
