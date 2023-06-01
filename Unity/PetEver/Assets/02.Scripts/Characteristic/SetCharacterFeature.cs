@@ -75,7 +75,6 @@ public class SetCharacterFeature : MonoBehaviour
     private String section1Color = "";
     private String section2Color = "";
     private AndroidJavaObject activityContext = null;
-    [SerializeField] private GameObject CharacterParent;
 
     void Awake()
     {
@@ -199,7 +198,7 @@ public class SetCharacterFeature : MonoBehaviour
             middleFurValue_chin = new Vector3(1.0f, 1.0f, 1.0f );
             shortFurValue_chin = new Vector3(0.4f, 0.4f, 0.4f );   
 
-            DontDestroyOnLoad(CharacterParent);
+            
 
         }
     }
