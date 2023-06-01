@@ -13,6 +13,7 @@ public class LoadSceneManager : MonoBehaviour
     [SerializeField] private Image progressBar;
     [SerializeField] private GameObject mainText;
     [SerializeField] private GameObject progressText;
+    [SerializeField] private GameObject characterParent;
     private GameObject dogModel;
     private TextMeshProUGUI mainTextTmp;
     private TextMeshProUGUI progressTextTmp;
@@ -59,6 +60,9 @@ public class LoadSceneManager : MonoBehaviour
     }
     public void LoadScene(string sceneName)
     {
+        if("MySpaceScene".Equals(sceneName)){
+            DontDestroyOnLoad(characterParent);
+        }
         StartCoroutine(LoadSceneAsync(sceneName));
     }
     IEnumerator LoadSceneAsync(string sceneName)

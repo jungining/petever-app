@@ -29,7 +29,8 @@ public class CreationSceneScript : MonoBehaviour
 
     public void OnClickRemake()
     {
-        Application.Quit();
+        SceneManager.LoadSceneAsync("BreedScene", LoadSceneMode.Single);
+        //Application.Quit();
     }
 
     void showCanvasGroup(CanvasGroup cg)

@@ -505,6 +505,7 @@ MonoBehaviour:
   progressBar: {fileID: 1161218167}
   mainText: {fileID: 655775360}
   progressText: {fileID: 15045636}
+  characterParent: {fileID: 1582827732}
 --- !u!1 &82453376
 GameObject:
   m_ObjectHideFlags: 0
@@ -2478,6 +2479,7 @@ MonoBehaviour:
   DogCamera: {fileID: 0}
   dogAnimator: {fileID: 0}
   touchtracking: {fileID: 0}
+  MeatPrefab: {fileID: 0}
 --- !u!114 &617331317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2537,7 +2539,6 @@ MonoBehaviour:
   retriever_brown: {fileID: 2100000, guid: e885a999d69e936409b2975a421944ea, type: 2}
   retriever_brown_deep: {fileID: 2100000, guid: ed1cce9193fb972448ec0810a02193c9, type: 2}
   retriever_brown_light: {fileID: 2100000, guid: 65d0ca5144d38824791d44395938b2d5, type: 2}
-  CharacterParent: {fileID: 1582827732}
 --- !u!114 &617331318
 MonoBehaviour:
   m_ObjectHideFlags: 0
