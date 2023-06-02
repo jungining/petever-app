@@ -71,42 +71,21 @@ public class SetCharacterFeature : MonoBehaviour
     private SkinnedMeshRenderer meshRenderer; 
 
     private String breed = "";
-    private String petName = "";
     private String section1Color = "";
-    private String section2Color = "";
-    private AndroidJavaObject activityContext = null;
 
     void Awake()
     {
-        //Vector3 dogScale = new Vector3(2f, 2f, 2f);
-
-        using (AndroidJavaClass activityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-        {
+       
             breed = "";
-            petName = "";
-           // GameObject dogPrefab;
             try
             {
-                activityContext = activityClass.GetStatic<AndroidJavaObject>("currentActivity");
-
-                AndroidJavaObject intent = activityContext.Call<AndroidJavaObject>("getIntent");
-                breed = intent.Call<String>("getStringExtra", "breed");
-                petName = intent.Call<String>("getStringExtra", "petname");
-                section1Color = intent.Call<String>("getStringExtra", "section1Color");
-                section2Color = intent.Call<String>("getStringExtra", "section2Color");
-
-                Debug.Log("[intent data] arguments : " + breed);
-                Debug.Log("[intent data] arguments : " + petName);
-                Debug.Log("[intent data] arguments : " + section1Color);
-                Debug.Log("[intent data] arguments : " + section2Color);
+                breed = BreedSceneScript.breed;
+                section1Color = BreedSceneScript.color1;
             }
             catch (Exception e)
             {
                 Debug.Log("GameManager Exception : " + e.ToString());
             }
-
-             //breed = "POME_LONG";
-             //section1Color = "000000";
 
             switch (breed)
             {
@@ -200,7 +179,7 @@ public class SetCharacterFeature : MonoBehaviour
 
             
 
-        }
+        
     }
 
     public void FurColorLight(bool isOn)
