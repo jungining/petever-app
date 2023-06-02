@@ -1643,6 +1643,7 @@ MonoBehaviour:
   rawImage: {fileID: 2073219568}
   currentCanvas: {fileID: 1273307647}
   resultCanvas: {fileID: 1760352272}
+  breedText: {fileID: 1937470705}
 --- !u!1 &805613774
 GameObject:
   m_ObjectHideFlags: 0
@@ -1978,7 +1979,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &929625004
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2698,7 +2699,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC800\uB294 \uD3EC\uBA54\uB77C\uB2C8\uC548\uC785\uB2C8\uB2E4"
+  m_text: "\uC800\uB294 \uD3EC\uBA54\uC5D0\uC694!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be840354085997d41b3a86d51252bbbb, type: 2}
   m_sharedMaterial: {fileID: -5431646752294213804, guid: be840354085997d41b3a86d51252bbbb, type: 2}
@@ -2808,10 +2809,10 @@ RectTransform:
   m_Father: {fileID: 1760352271}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 112.976074}
-  m_SizeDelta: {x: 0, y: -1137.1879}
+  m_SizeDelta: {x: 0, y: 1203}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2073219567
 CanvasRenderer:
