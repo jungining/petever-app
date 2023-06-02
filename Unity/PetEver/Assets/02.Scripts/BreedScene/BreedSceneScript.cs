@@ -47,11 +47,14 @@ public class BreedSceneScript : MonoBehaviour
     {
         var tempImage = File.ReadAllBytes(imagePath);
 
-        // TODO : Fit image
-        Texture2D texture = new Texture2D(1170, 1203);
+        //Fit image
+        Texture2D texture = new Texture2D(1080, 1203);
         texture.LoadImage(tempImage);
 
         rawImage.texture = texture;
+        rawImage.SetNativeSize();
+        ImageSizeSetting(rawImage, 1080, 1203);
+
 
         CanvasUtil.hideCanvasGroup(currentCanvas);
         CanvasUtil.showCanvasGroup(resultCanvas);
@@ -122,6 +125,22 @@ public class BreedSceneScript : MonoBehaviour
 
         breedText.text = "저는 " + korean + "에요!";
         breedBubble.SetActive(true);
+    }
+    void ImageSizeSetting(RawImage img, float x, float y)
+    {
+        var imgX = img.rectTransform.sizeDelta.x;
+        var imgY = img.rectTransform.sizeDelta.y;
+
+        if (x / y > imgX / imgY) // if image height is longer than width 
+        {
+            img.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, y);
+            img.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, imgX * (y / imgY));
+        }
+        else // if image width is longer than height 
+        {
+            img.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, x);
+            img.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, imgY * (x / imgX));
+        }
     }
 
 
