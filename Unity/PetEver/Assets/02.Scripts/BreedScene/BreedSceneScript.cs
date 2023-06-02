@@ -3,27 +3,35 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
+using Defective.JSON;
+using TMPro;
 
 public class BreedSceneScript : MonoBehaviour
 {
-
+    private string breedUrl = "http://3.35.242.182:3000/image";
     [SerializeField] private RawImage rawImage;
     [SerializeField] private CanvasGroup currentCanvas, resultCanvas;
+    [SerializeField] private TextMeshProUGUI breedText;
+    [SerializeField] private GameObject breedBubble;
+    public static string color1, breed;
     public void GetImage()
     {
+        breedBubble.SetActive(false);
         NativeGallery.GetImageFromGallery((image) =>  //mobile gallery folder open using NativeGallery Plugin
         {
             FileInfo selectedImage = new FileInfo(image); //choose image from gallery folder
 
-            if (!string.IsNullOrEmpty(image)) // if image is selected, start coroutine(load image)
+            if (!string.IsNullOrEmpty(image))
+            { // if image is selected, start coroutine(load image)
+                StartCoroutine(UploadImageToGetBreed(image));
                 StartCoroutine(LoadImage(image));
-
+            }
         });
     }
 
     public void OnClickRetry()
     {
-
         CanvasUtil.hideCanvasGroup(resultCanvas);
         CanvasUtil.showCanvasGroup(currentCanvas);
     }
@@ -32,26 +40,89 @@ public class BreedSceneScript : MonoBehaviour
     {
         SceneManager.LoadSceneAsync("CreationScene", LoadSceneMode.Single);
     }
+   
 
 
     IEnumerator LoadImage(string imagePath)
     {
-        //byte[] imageData = File.ReadAllBytes(imagePath);
-        //string imageName = Path.GetFileName(imagePath).Split('.')[0];
-        //string saveImagePath = Application.persistentDataPath + "/Image";
-
-        //File.WriteAllBytes(saveImagePath + imageName + ".jpg", imageData);
-
         var tempImage = File.ReadAllBytes(imagePath);
 
         // TODO : Fit image
-        Texture2D texture = new Texture2D(1080, 1440);
+        Texture2D texture = new Texture2D(1170, 1203);
         texture.LoadImage(tempImage);
 
         rawImage.texture = texture;
+
         CanvasUtil.hideCanvasGroup(currentCanvas);
         CanvasUtil.showCanvasGroup(resultCanvas);
         yield return null;
     }
-    
+
+    IEnumerator UploadImageToGetBreed(string imagePath)
+    {
+        WWWForm form = new WWWForm();
+
+        var tempImage = File.ReadAllBytes(imagePath);
+        form.AddBinaryData("image", tempImage, Path.GetFileName(imagePath));
+        UnityWebRequest request = UnityWebRequest.Post(breedUrl, form);
+
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Image upload failed: " + request.error);
+        }
+        else
+        {
+            // Extract the image data from the response
+            JSONObject responseJson = new JSONObject(request.downloadHandler.text);
+            breed = responseJson.GetField("breed").stringValue;
+            color1 = responseJson.GetField("content").GetField("section1").stringValue;
+            setBreedText(breed);
+        }
+    }
+
+     void setBreedText(string breed)
+    {
+        string korean;
+        switch (breed)
+        {
+            case "MALTESE":
+                korean = "말티즈";
+            break;
+            case "POME_LONG":
+            case "POME_SHORT":
+                korean = "포메";
+            break;
+            case "CHIHUAHUA":
+                korean = "치와와";
+            break;
+            case "SHIHTZU":
+                korean = "시츄";
+            break;
+            case "BEAGLE":
+                korean = "비글이";
+            break;
+            case "YORKSHIRE":
+                korean = "요크셔";
+            break;
+            case "GOLDEN":
+                korean = "리트리버";
+            break;
+            case "PUG":
+                korean = "퍼그";
+            break;
+            case "POODLE":
+                korean = "푸들이";
+            break;
+            default:
+                korean = "포메";
+            break;
+        }
+
+        breedText.text = "저는 " + korean + "에요!";
+        breedBubble.SetActive(true);
+    }
+
+
 }
