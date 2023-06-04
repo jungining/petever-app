@@ -40,7 +40,7 @@ public class BreedSceneScript : MonoBehaviour
     {
         SceneManager.LoadSceneAsync("CreationScene", LoadSceneMode.Single);
     }
-   
+
 
 
     IEnumerator LoadImage(string imagePath)
@@ -67,60 +67,66 @@ public class BreedSceneScript : MonoBehaviour
 
         var tempImage = File.ReadAllBytes(imagePath);
         form.AddBinaryData("image", tempImage, Path.GetFileName(imagePath));
-        UnityWebRequest request = UnityWebRequest.Post(breedUrl, form);
-
-        yield return request.SendWebRequest();
-
-        if (request.result != UnityWebRequest.Result.Success)
+        using (UnityWebRequest request = UnityWebRequest.Post(breedUrl, form))
         {
-            Debug.LogError("Image upload failed: " + request.error);
-        }
-        else
-        {
-            // Extract the image data from the response
-            JSONObject responseJson = new JSONObject(request.downloadHandler.text);
-            breed = responseJson.GetField("breed").stringValue;
-            color1 = responseJson.GetField("content").GetField("section1").stringValue;
-            setBreedText(breed);
+            yield return request.SendWebRequest();
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Image upload failed: " + request.error);
+                setBreedText("error");
+            }
+            else
+            {
+                // Extract the image data from the response
+                JSONObject responseJson = new JSONObject(request.downloadHandler.text);
+                breed = responseJson.GetField("breed").stringValue;
+                color1 = responseJson.GetField("content").GetField("section1").stringValue;
+                setBreedText(breed);
+            }
         }
     }
 
-     void setBreedText(string breed)
+    void setBreedText(string breed)
     {
         string korean;
         switch (breed)
         {
+            case "error":
+                breedText.text = "다시 시도해주세요!";
+                breedBubble.SetActive(true);
+                return;
             case "MALTESE":
                 korean = "말티즈";
-            break;
+                break;
             case "POME_LONG":
             case "POME_SHORT":
                 korean = "포메";
-            break;
+                break;
             case "CHIHUAHUA":
                 korean = "치와와";
-            break;
+                break;
             case "SHIHTZU":
                 korean = "시츄";
-            break;
+                break;
             case "BEAGLE":
                 korean = "비글이";
-            break;
+                break;
             case "YORKSHIRE":
                 korean = "요크셔";
-            break;
+                break;
             case "GOLDEN":
                 korean = "리트리버";
-            break;
+                break;
             case "PUG":
                 korean = "퍼그";
-            break;
+                break;
             case "POODLE":
                 korean = "푸들이";
-            break;
+                break;
             default:
                 korean = "포메";
-            break;
+                break;
         }
 
         breedText.text = "저는 " + korean + "에요!";
