@@ -9,7 +9,13 @@ public class DemoCreationScript : MonoBehaviour
     CanvasGroup DemoCreationCanvas;
     CanvasGroup MySpaceCanvas;
 
+    CanvasGroup StartCanvas;
+
     void Start() {
+        StartCanvas = GameObject.Find("DemoIntroCanvas").GetComponent<CanvasGroup>();
+        DemoPicCanvas = GameObject.Find("DemoPicCavnas").GetComponent<CanvasGroup>();
+        HideGroup(DemoPicCanvas);
+
         DemoCreationCanvas= GameObject.Find("DemoCreationCanvas").GetComponent<CanvasGroup>();
         HideGroup(DemoCreationCanvas);
 
@@ -31,6 +37,15 @@ public class DemoCreationScript : MonoBehaviour
 
         MySpaceCanvas= GameObject.Find("MySpaceCanvas").GetComponent<CanvasGroup>();
         ShowGroup(MySpaceCanvas);
+    }
+
+    public void nextStartPage()
+    {
+        StartCanvas = GameObject.Find("DemoIntroCanvas").GetComponent<CanvasGroup>();
+        HideGroup(StartCanvas);
+
+        DemoPicCanvas = GameObject.Find("DemoPicCavnas").GetComponent<CanvasGroup>();
+        ShowGroup(DemoPicCanvas);
     }
 
         private void ShowGroup(CanvasGroup gr)
